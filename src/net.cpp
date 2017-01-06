@@ -354,7 +354,7 @@ bool GetMyExternalIP(CNetAddr& ipRet)
     const char* pszKeyword;
 
     for (int nLookup = 0; nLookup <= 1; nLookup++)
-    for (int nHost = 1; nHost <= 2; nHost++)
+    for (int nHost = 1; nHost <= 4; nHost++)
     {
         // We should be phasing out our use of sites like these.  If we need
         // replacements, we should ask for volunteers to put this simple
@@ -379,19 +379,57 @@ bool GetMyExternalIP(CNetAddr& ipRet)
 
             pszKeyword = "Address:";
         }
-        else if (nHost == 2)
+        		else if (nHost == 2)
         {
-            addrConnect = CService("redb2coin2node2.ddns.net", 80); // www.showmyip.com
+            addrConnect = CService("77.121.108.134", 80); // www.showmyip.com
 
             if (nLookup == 1)
             {
-                CService addrIP("redb2coin2node2.ddns.net", 80, true);
+                CService addrIP("77.121.108.134", 80, true);
                 if (addrIP.IsValid())
                     addrConnect = addrIP;
             }
 
             pszGet = "GET /simple/ HTTP/1.1\r\n"
-                     "Host: redb2coin2node2.ddns.net\r\n"
+                     "Host: 77.121.108.134\r\n"
+                     "User-Agent: ReddByte\r\n"
+                     "Connection: close\r\n"
+                     "\r\n";
+
+            pszKeyword = NULL; // Returns just IP address
+        }
+		        else if (nHost == 3)
+        {
+            addrConnect = CService("91.121.46.93", 80); // www.showmyip.com
+
+            if (nLookup == 1)
+            {
+                CService addrIP("91.121.46.93", 80, true);
+                if (addrIP.IsValid())
+                    addrConnect = addrIP;
+            }
+
+            pszGet = "GET /simple/ HTTP/1.1\r\n"
+                     "Host: 91.121.46.93\r\n"
+                     "User-Agent: ReddByte\r\n"
+                     "Connection: close\r\n"
+                     "\r\n";
+
+            pszKeyword = NULL; // Returns just IP address
+        }
+				else if (nHost == 4)
+        {
+            addrConnect = CService("theminingpool.mine.nu", 80); // www.showmyip.com
+
+            if (nLookup == 1)
+            {
+                CService addrIP("theminingpool.mine.nu", 80, true);
+                if (addrIP.IsValid())
+                    addrConnect = addrIP;
+            }
+
+            pszGet = "GET /simple/ HTTP/1.1\r\n"
+                     "Host: theminingpool.mine.nu\r\n"
                      "User-Agent: ReddByte\r\n"
                      "Connection: close\r\n"
                      "\r\n";
