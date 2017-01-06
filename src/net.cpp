@@ -362,17 +362,17 @@ bool GetMyExternalIP(CNetAddr& ipRet)
         //  <?php echo $_SERVER["REMOTE_ADDR"]; ?>
         if (nHost == 1)
         {
-            addrConnect = CService("127.0.0.1",80); // checkip.dyndns.org
+            addrConnect = CService("redbcoinnode.ddns.net",80); // checkip.dyndns.org
 
             if (nLookup == 1)
             {
-                CService addrIP("127.0.0.1", 80, true);
+                CService addrIP("redbcoinnode.ddns.net", 80, true);
                 if (addrIP.IsValid())
                     addrConnect = addrIP;
             }
 
             pszGet = "GET / HTTP/1.1\r\n"
-                     "Host: 127.0.0.1\r\n"
+                     "Host: redbcoinnode.ddns.net\r\n"
                      "User-Agent: ReddByte\r\n"
                      "Connection: close\r\n"
                      "\r\n";
@@ -381,17 +381,17 @@ bool GetMyExternalIP(CNetAddr& ipRet)
         }
         else if (nHost == 2)
         {
-            addrConnect = CService("127.0.0.1", 80); // www.showmyip.com
+            addrConnect = CService("redb2coin2node2.ddns.net", 80); // www.showmyip.com
 
             if (nLookup == 1)
             {
-                CService addrIP("127.0.0.1", 80, true);
+                CService addrIP("redb2coin2node2.ddns.net", 80, true);
                 if (addrIP.IsValid())
                     addrConnect = addrIP;
             }
 
             pszGet = "GET /simple/ HTTP/1.1\r\n"
-                     "Host: 127.0.0.1\r\n"
+                     "Host: redb2coin2node2.ddns.net\r\n"
                      "User-Agent: ReddByte\r\n"
                      "Connection: close\r\n"
                      "\r\n";
