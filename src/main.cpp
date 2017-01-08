@@ -974,7 +974,7 @@ int64_t GetProofOfWorkReward(int64_t nFees)
 	}
 	    else if(pindexBest->nHeight > 1)
 	{
-        nSubsidy = 200 * COIN / ( 1 + ( pindexBest->nHeight / 172800 ));
+        nSubsidy = 200 * COIN / ( 1 + ( pindexBest->nHeight / 525600 ));
     }
 
     if (fDebug && GetBoolArg("-printcreation"))
@@ -2509,7 +2509,7 @@ bool LoadBlockIndex(bool fAllowNew)
         block.nNonce = 853509;
 		if(fTestNet)
         {
-            block.nTime = 1483114874;
+            block.nTime = 1483114875;
         }
 		
 		uint256 nhashMerkleRoot = uint256("77688772599ecb05f2b36ebbe45306608a943f11bb1fb82bc27e94482c2c5c1a");
