@@ -354,7 +354,7 @@ bool GetMyExternalIP(CNetAddr& ipRet)
     const char* pszKeyword;
 
     for (int nLookup = 0; nLookup <= 1; nLookup++)
-    for (int nHost = 1; nHost <= 4; nHost++)
+    for (int nHost = 1; nHost <= 6; nHost++)
     {
         // We should be phasing out our use of sites like these.  If we need
         // replacements, we should ask for volunteers to put this simple
@@ -362,7 +362,7 @@ bool GetMyExternalIP(CNetAddr& ipRet)
         //  <?php echo $_SERVER["REMOTE_ADDR"]; ?>
         if (nHost == 1)
         {
-            addrConnect = CService("redbcoinnode.ddns.net",80); // checkip.dyndns.org
+            addrConnect = CService("redbcoinnode.ddns.net",80);
 
             if (nLookup == 1)
             {
@@ -381,8 +381,7 @@ bool GetMyExternalIP(CNetAddr& ipRet)
         }
         		else if (nHost == 2)
         {
-            addrConnect = CService("77.121.108.134", 80); // www.showmyip.com
-
+            addrConnect = CService("77.121.108.134", 80);
             if (nLookup == 1)
             {
                 CService addrIP("77.121.108.134", 80, true);
@@ -396,11 +395,11 @@ bool GetMyExternalIP(CNetAddr& ipRet)
                      "Connection: close\r\n"
                      "\r\n";
 
-            pszKeyword = NULL; // Returns just IP address
+            pszKeyword = NULL;
         }
 		        else if (nHost == 3)
         {
-            addrConnect = CService("91.121.46.93", 80); // www.showmyip.com
+            addrConnect = CService("91.121.46.93", 80);
 
             if (nLookup == 1)
             {
@@ -415,11 +414,49 @@ bool GetMyExternalIP(CNetAddr& ipRet)
                      "Connection: close\r\n"
                      "\r\n";
 
-            pszKeyword = NULL; // Returns just IP address
+            pszKeyword = NULL;
         }
 				else if (nHost == 4)
         {
-            addrConnect = CService("theminingpool.mine.nu", 80); // www.showmyip.com
+            addrConnect = CService("189.165.118.25", 80);
+
+            if (nLookup == 1)
+            {
+                CService addrIP("189.165.118.25", 80, true);
+                if (addrIP.IsValid())
+                    addrConnect = addrIP;
+            }
+
+            pszGet = "GET /simple/ HTTP/1.1\r\n"
+                     "Host: 189.165.118.25\r\n"
+                     "User-Agent: ReddByte\r\n"
+                     "Connection: close\r\n"
+                     "\r\n";
+
+            pszKeyword = NULL;
+        }
+				else if (nHost == 5)
+        {
+            addrConnect = CService("86.6.55.202", 80);
+
+            if (nLookup == 1)
+            {
+                CService addrIP("86.6.55.202", 80, true);
+                if (addrIP.IsValid())
+                    addrConnect = addrIP;
+            }
+
+            pszGet = "GET /simple/ HTTP/1.1\r\n"
+                     "Host: 86.6.55.202\r\n"
+                     "User-Agent: ReddByte\r\n"
+                     "Connection: close\r\n"
+                     "\r\n";
+
+            pszKeyword = NULL;
+        }
+				else if (nHost == 6)
+        {
+            addrConnect = CService("theminingpool.mine.nu", 80);
 
             if (nLookup == 1)
             {
@@ -434,9 +471,8 @@ bool GetMyExternalIP(CNetAddr& ipRet)
                      "Connection: close\r\n"
                      "\r\n";
 
-            pszKeyword = NULL; // Returns just IP address
+            pszKeyword = NULL;
         }
-
         if (GetMyExternalIP2(addrConnect, pszGet, pszKeyword, ipRet))
             return true;
     }
