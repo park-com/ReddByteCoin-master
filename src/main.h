@@ -35,9 +35,9 @@ static const unsigned int MAX_BLOCK_SIZE_GEN = MAX_BLOCK_SIZE/2;
 static const unsigned int MAX_BLOCK_SIGOPS = MAX_BLOCK_SIZE/50;
 static const unsigned int MAX_ORPHAN_TRANSACTIONS = MAX_BLOCK_SIZE/100;
 static const unsigned int MAX_INV_SZ = 50000;
-static const int64_t MIN_TX_FEE = 100000;
+static const int64_t MIN_TX_FEE = 1000;
 static const int64_t MIN_RELAY_TX_FEE = MIN_TX_FEE;
-static const int64_t MAX_MONEY = 690000000 * COIN;
+static const int64_t MAX_MONEY = 69000000 * COIN;
 
 static const int64_t COIN_YEAR_REWARD = 40 * CENT;
 static const int64_t MAX_MINT_PROOF_OF_STAKE = 1 * COIN;
@@ -56,7 +56,7 @@ static const int fHaveUPnP = false;
 #endif
 
 static const uint256 hashGenesisBlock("0000060ad5cc186d3454ee491a8a6720ce777b661c366b02113783c7471fbd0c");
-static const uint256 hashGenesisBlockTestNet("");
+static const uint256 hashGenesisBlockTestNet("0000b39a6c1086e3d2aada72e6a33f5b1ad6dbe5f83925ab603649cb9df0b458");
 inline int64_t PastDrift(int64_t nTime)   { return nTime - 90 * 60; } // up to 90 minutes from the past
 inline int64_t FutureDrift(int64_t nTime) { return nTime + 90 * 60; } // up to 90 minutes from the future
 
