@@ -966,15 +966,15 @@ uint256 WantedByOrphan(const CBlock* pblockOrphan)
 // miner's coin base reward
 int64_t GetProofOfWorkReward(int64_t nFees)
 {
-    int64_t nSubsidy = 1 * COIN;
+    int64_t nSubsidy = 0.1 * COIN;
 
 	if (pindexBest->nHeight+1 == 1) 
 	{ 
-		nSubsidy = 200 * COIN; return nSubsidy; 
+		nSubsidy = 50 * COIN; return nSubsidy; 
 	}
 	    else if(pindexBest->nHeight > 1)
 	{
-        nSubsidy = 200 * COIN / ( 1 + ( pindexBest->nHeight / 525600 ));
+        nSubsidy = 50 * COIN / ( 1 + ( pindexBest->nHeight / 259000 ));
     }
 
     if (fDebug && GetBoolArg("-printcreation"))
