@@ -1,6 +1,5 @@
 # Copyright (c) 2017 The ReddByteCoin Core developers
 
-
 LIBLEVELDB_INT = leveldb/libleveldb.a
 LIBMEMENV_INT  = leveldb/libmemenv.a
 
