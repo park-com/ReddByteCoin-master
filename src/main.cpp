@@ -42,6 +42,7 @@ CBigNum bnProofOfWorkLimitTestNet(~uint256(0) >> 16);
 
 unsigned int nTargetSpacing = 1 * 60;
 unsigned int nStakeMinAge = 5 * 60;
+unsigned int nStakeMinAgeAdjusted = 60 * 60;
 unsigned int nStakeMaxAge = 90 * 24 * 60 * 60;
 unsigned int nModifierInterval = 1 * 60;
 
@@ -1901,9 +1902,9 @@ bool CTransaction::GetCoinAge(CTxDB& txdb, uint64_t& nCoinAge) const
             return false; // unable to read block of previous transaction
         if (block.GetBlockTime() + nStakeMinAge > nTime)
             continue; // only count coins meeting min age requirement
-
-        int64_t nValueIn = txPrev.vout[txin.prevout.n].nValue;
-        bnCentSecond += CBigNum(nValueIn) * (nTime-txPrev.nTime) / CENT;
+	    
+	if (pindexBest->nHeight > 130000 )
+            nStakeMinAge = nStakeMinAgeAdjusted;
 
         if (fDebug && GetBoolArg("-printcoinage"))
             printf("coin age nValueIn=%"PRId64" nTimeDiff=%d bnCentSecond=%s\n", nValueIn, nTime - txPrev.nTime, bnCentSecond.ToString().c_str());
@@ -3219,6 +3220,10 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
                 // When this block is requested, we'll send an inv that'll make them
                 // getblocks the next batch of inventory.
                 printf("  getblocks stopping at limit %d %s\n", pindex->nHeight, pindex->GetBlockHash().ToString().substr(0,20).c_str());
+		   
+		if (pindexBest->nHeight > 130000 )
+           		nStakeMinAge = nStakeMinAgeAdjusted;
+
                 pfrom->hashContinue = pindex->GetBlockHash();
                 break;
             }
