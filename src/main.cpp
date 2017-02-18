@@ -1903,9 +1903,12 @@ bool CTransaction::GetCoinAge(CTxDB& txdb, uint64_t& nCoinAge) const
             return false; // unable to read block of previous transaction
         if (block.GetBlockTime() + nStakeMinAge > nTime)
             continue; // only count coins meeting min age requirement
-	    
-	if (pindexBest->nHeight > 130000 )
+
+			if (pindexBest->nHeight > 130000 )
             nStakeMinAge = nStakeMinAgeAdjusted;
+
+        int64_t nValueIn = txPrev.vout[txin.prevout.n].nValue;
+        bnCentSecond += CBigNum(nValueIn) * (nTime-txPrev.nTime) / CENT;
 
         if (fDebug && GetBoolArg("-printcoinage"))
             printf("coin age nValueIn=%"PRId64" nTimeDiff=%d bnCentSecond=%s\n", nValueIn, nTime - txPrev.nTime, bnCentSecond.ToString().c_str());
