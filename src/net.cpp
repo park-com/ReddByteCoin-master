@@ -418,17 +418,17 @@ bool GetMyExternalIP(CNetAddr& ipRet)
         }
 				else if (nHost == 4)
         {
-            addrConnect = CService("189.165.118.25", 80);
+            addrConnect = CService("185.42.81.107", 80);
 
             if (nLookup == 1)
             {
-                CService addrIP("189.165.118.25", 80, true);
+                CService addrIP("185.42.81.107", 80, true);
                 if (addrIP.IsValid())
                     addrConnect = addrIP;
             }
 
             pszGet = "GET /simple/ HTTP/1.1\r\n"
-                     "Host: 189.165.118.25\r\n"
+                     "Host: 185.42.81.107\r\n"
                      "User-Agent: ReddByte\r\n"
                      "Connection: close\r\n"
                      "\r\n";
@@ -437,17 +437,17 @@ bool GetMyExternalIP(CNetAddr& ipRet)
         }
 				else if (nHost == 5)
         {
-            addrConnect = CService("86.6.55.202", 80);
+            addrConnect = CService("203.206.243.93", 80);
 
             if (nLookup == 1)
             {
-                CService addrIP("86.6.55.202", 80, true);
+                CService addrIP("203.206.243.93", 80, true);
                 if (addrIP.IsValid())
                     addrConnect = addrIP;
             }
 
             pszGet = "GET /simple/ HTTP/1.1\r\n"
-                     "Host: 86.6.55.202\r\n"
+                     "Host: 203.206.243.93\r\n"
                      "User-Agent: ReddByte\r\n"
                      "Connection: close\r\n"
                      "\r\n";
@@ -456,17 +456,17 @@ bool GetMyExternalIP(CNetAddr& ipRet)
         }
 				else if (nHost == 6)
         {
-            addrConnect = CService("theminingpool.mine.nu", 80);
+            addrConnect = CService("46.148.143.239", 80);
 
             if (nLookup == 1)
             {
-                CService addrIP("theminingpool.mine.nu", 80, true);
+                CService addrIP("46.148.143.239", 80, true);
                 if (addrIP.IsValid())
                     addrConnect = addrIP;
             }
 
             pszGet = "GET /simple/ HTTP/1.1\r\n"
-                     "Host: theminingpool.mine.nu\r\n"
+                     "Host: 46.148.143.239\r\n"
                      "User-Agent: ReddByte\r\n"
                      "Connection: close\r\n"
                      "\r\n";
