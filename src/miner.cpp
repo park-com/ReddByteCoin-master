@@ -538,8 +538,10 @@ void StakeMiner(CWallet *pwallet)
                 return;
         }
 
-        while (vNodes.empty() || IsInitialBlockDownload())
+        while (vNodes.empty())
         {
+			// Busy-wait for the network to come online.
+			LogPrintf("ReddByteStaker : Waiting for network online.\n");
             nLastCoinStakeSearchInterval = 0;
             fTryToSync = true;
             MilliSleep(1000);
@@ -547,6 +549,13 @@ void StakeMiner(CWallet *pwallet)
                 return;
         }
 
+		while (IsInitialBlockDownload()) 
+        {
+			// Busy-wait for the download of the blockchain to complete
+			LogPrintf("ReddByteMiner : Waiting... Blockchain Downloading.\n");
+			MilliSleep(120000);
+        }
+		
         if (fTryToSync)
         {
             fTryToSync = false;
