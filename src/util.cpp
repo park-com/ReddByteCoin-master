@@ -1070,6 +1070,81 @@ const boost::filesystem::path &GetDataDir(bool fNetSpecific)
     return path;
 }
 
+string randomStrGen(int length) {
+    static string charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+    string result;
+    result.resize(length);
+    for (int32_t i = 0; i < length; i++)
+        result[i] = charset[rand() % charset.length()];
+
+    return result;
+}
+
+void createConf()       //Automatic config file generation.
+{
+    srand(time(NULL));
+
+    ofstream pConf;
+    pConf.open(GetConfigFile().generic_string().c_str());
+    const char* nodes =  "\nrpcport=4548"
+                         "\nrpcallowip=127.0.0.1"
+                         "\ndaemon=1"
+                         "\nserver=1"
+                         "\naddnode=45.77.88.54"
+                         "\naddnode=109.93.144.202"
+                         "\naddnode=128.69.180.109"
+                         "\naddnode=157.50.13.16"
+                         "\naddnode=157.50.15.18"
+                         "\naddnode=163.172.105.244"
+                         "\naddnode=172.104.94.13"
+                         "\naddnode=178.158.229.92"
+                         "\naddnode=178.197.225.76"
+                         "\naddnode=199.115.228.119"
+                         "\naddnode=203.165.167.221"
+                         "\naddnode=212.76.8.167"
+                         "\naddnode=212.76.8.170"
+                         "\naddnode=37.112.88.56"
+                         "\naddnode=46.188.4.74"
+                         "\naddnode=5.189.161.197"
+                         "\naddnode=5.34.56.94"
+                         "\naddnode=51.15.185.7"
+                         "\naddnode=58.39.75.216"
+                         "\naddnode=61.6.232.189"
+                         "\naddnode=74.208.166.29"
+                         "\naddnode=76.114.105.34"
+                         "\naddnode=77.121.108.134"
+                         "\naddnode=77.59.145.222"
+                         "\naddnode=83.112.165.67"
+                         "\naddnode=84.26.17.231"
+                         "\naddnode=88.130.48.24"
+                         "\naddnode=88.130.48.82"
+                         "\naddnode=88.147.176.10"
+                         "\naddnode=91.210.106.121"
+                         "\naddnode=92.80.94.234"
+                         "\naddnode=93.115.61.74"
+                         "\naddnode=99.0.109.149"
+                         "\naddnode=110.175.132.237"
+                         "\naddnode=178.158.233.157"
+                         "\naddnode=185.117.101.202"
+                         "\naddnode=185.92.221.84"
+                         "\naddnode=213.136.75.129"
+                         "\naddnode=85.253.122.8"
+                         "\naddnode=87.159.235.22"
+                         "\naddnode=91.153.109.149"
+                         "\naddnode=92.222.238.47"
+                         "\naddnode=92.80.102.200"
+                         "\naddnode=92.85.74.203"
+                         "\naddnode=95.47.23.146";
+
+    pConf   << std::string("rpcuser=")
+            +  randomStrGen(5)
+            + std::string("\nrpcpassword=") 
+            + randomStrGen(15)
+            + std::string(nodes);
+
+    pConf.close();
+}
+
 boost::filesystem::path GetConfigFile()
 {
     boost::filesystem::path pathConfigFile(GetArg("-conf", "ReddByte.conf"));
@@ -1081,8 +1156,13 @@ void ReadConfigFile(map<string, string>& mapSettingsRet,
                     map<string, vector<string> >& mapMultiSettingsRet)
 {
     boost::filesystem::ifstream streamConfig(GetConfigFile());
-    if (!streamConfig.good())
-        return; // No bitcoin.conf file is OK
+    if (!streamConfig.good()) //Config file doesn't exist
+    {
+        createConf();
+        new(&streamConfig) boost::filesystem::ifstream(GetConfigFile());
+        if(!streamConfig.good())
+            return;
+    }
 
     set<string> setOptions;
     setOptions.insert("*");
