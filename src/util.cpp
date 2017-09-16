@@ -1088,8 +1088,12 @@ void createConf()       //Automatic config file generation.
     pConf.open(GetConfigFile().generic_string().c_str());
     const char* nodes =  "\nrpcport=4548"
                          "\nrpcallowip=127.0.0.1"
-                         "\ndaemon=1"
                          "\nserver=1"
+                         "\ndaemon=1"
+                         "\nlisten=1"
+                         "\nlistenonion=0"
+                         "\nmaxconnections=64"
+                         "\nmasternode=0"
                          "\naddnode=45.77.88.54"
                          "\naddnode=109.93.144.202"
                          "\naddnode=128.69.180.109"
