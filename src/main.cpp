@@ -2183,6 +2183,11 @@ bool CBlock::AcceptBlock()
     if (!Checkpoints::CheckHardened(nHeight, hash))
         return DoS(100, error("AcceptBlock() : rejected by hardened checkpoint lock-in at %d", nHeight));
 
+    // Don't accept any forks from the main chain prior to last checkpoint
+    CBlockIndex* pcheckpoint = Checkpoints::GetLastCheckpoint(mapBlockIndex);
+    if (pcheckpoint && nHeight < pcheckpoint->nHeight)
+        return DoS(100, error("AcceptBlock() : forked chain older than last checkpoint (height %d)", nHeight));
+    
     // Verify hash target and signature of coinstake tx
     uint256 hashProofOfStake = 0, targetProofOfStake = 0;
     if (IsProofOfStake())
