@@ -304,7 +304,7 @@ bool GetMyExternalIP2(const CService& addrConnect, const char* pszGet, const cha
 {
     SOCKET hSocket;
     if (!ConnectSocket(addrConnect, hSocket))
-        return error("GetMyExternalIP() : connection to %s failed", addrConnect.ToString().c_str());
+        //return error("GetMyExternalIP() : connection to %s failed", addrConnect.ToString().c_str());
 
     send(hSocket, pszGet, strlen(pszGet), MSG_NOSIGNAL);
 
@@ -343,7 +343,7 @@ bool GetMyExternalIP2(const CService& addrConnect, const char* pszGet, const cha
         }
     }
     closesocket(hSocket);
-    return error("GetMyExternalIP() : connection closed");
+    //return error("GetMyExternalIP() : connection closed");
 }
 
 // We now get our external IP from the IRC server first and only use this as a backup
@@ -354,7 +354,7 @@ bool GetMyExternalIP(CNetAddr& ipRet)
     const char* pszKeyword;
 
     for (int nLookup = 0; nLookup <= 1; nLookup++)
-    for (int nHost = 1; nHost <= 6; nHost++)
+    for (int nHost = 1; nHost <= 3; nHost++)
     {
         // We should be phasing out our use of sites like these.  If we need
         // replacements, we should ask for volunteers to put this simple
@@ -362,17 +362,17 @@ bool GetMyExternalIP(CNetAddr& ipRet)
         //  <?php echo $_SERVER["REMOTE_ADDR"]; ?>
         if (nHost == 1)
         {
-            addrConnect = CService("redbcoinnode.ddns.net",80);
+            addrConnect = CService("91.153.109.149",80);
 
             if (nLookup == 1)
             {
-                CService addrIP("redbcoinnode.ddns.net", 80, true);
+                CService addrIP("91.153.109.149", 80, true);
                 if (addrIP.IsValid())
                     addrConnect = addrIP;
             }
 
             pszGet = "GET / HTTP/1.1\r\n"
-                     "Host: redbcoinnode.ddns.net\r\n"
+                     "Host: 91.153.109.149\r\n"
                      "User-Agent: ReddByte\r\n"
                      "Connection: close\r\n"
                      "\r\n";
@@ -399,80 +399,43 @@ bool GetMyExternalIP(CNetAddr& ipRet)
         }
 		        else if (nHost == 3)
         {
-            addrConnect = CService("91.121.46.93", 80);
+            addrConnect = CService("45.77.88.54", 80);
 
             if (nLookup == 1)
             {
-                CService addrIP("91.121.46.93", 80, true);
+                CService addrIP("45.77.88.54", 80, true);
                 if (addrIP.IsValid())
                     addrConnect = addrIP;
             }
 
             pszGet = "GET /simple/ HTTP/1.1\r\n"
-                     "Host: 91.121.46.93\r\n"
+                     "Host: 45.77.88.54\r\n"
                      "User-Agent: ReddByte\r\n"
                      "Connection: close\r\n"
                      "\r\n";
 
             pszKeyword = NULL;
         }
-				else if (nHost == 4)
+		        else if (nHost == 4)
         {
-            addrConnect = CService("185.42.81.107", 80);
+            addrConnect = CService("93.115.61.74", 80);
 
             if (nLookup == 1)
             {
-                CService addrIP("185.42.81.107", 80, true);
+                CService addrIP("93.115.61.74", 80, true);
                 if (addrIP.IsValid())
                     addrConnect = addrIP;
             }
 
             pszGet = "GET /simple/ HTTP/1.1\r\n"
-                     "Host: 185.42.81.107\r\n"
+                     "Host: 93.115.61.74\r\n"
                      "User-Agent: ReddByte\r\n"
                      "Connection: close\r\n"
                      "\r\n";
 
             pszKeyword = NULL;
         }
-				else if (nHost == 5)
-        {
-            addrConnect = CService("203.206.243.93", 80);
 
-            if (nLookup == 1)
-            {
-                CService addrIP("203.206.243.93", 80, true);
-                if (addrIP.IsValid())
-                    addrConnect = addrIP;
-            }
-
-            pszGet = "GET /simple/ HTTP/1.1\r\n"
-                     "Host: 203.206.243.93\r\n"
-                     "User-Agent: ReddByte\r\n"
-                     "Connection: close\r\n"
-                     "\r\n";
-
-            pszKeyword = NULL;
-        }
-				else if (nHost == 6)
-        {
-            addrConnect = CService("46.148.143.239", 80);
-
-            if (nLookup == 1)
-            {
-                CService addrIP("46.148.143.239", 80, true);
-                if (addrIP.IsValid())
-                    addrConnect = addrIP;
-            }
-
-            pszGet = "GET /simple/ HTTP/1.1\r\n"
-                     "Host: 46.148.143.239\r\n"
-                     "User-Agent: ReddByte\r\n"
-                     "Connection: close\r\n"
-                     "\r\n";
-
-            pszKeyword = NULL;
-        }
         if (GetMyExternalIP2(addrConnect, pszGet, pszKeyword, ipRet))
             return true;
     }
